@@ -27,7 +27,10 @@ router.register(r'leaderboard', LeaderboardViewSet)
 router.register(r'workouts', WorkoutViewSet)
 
 def api_root(request):
-    return HttpResponse('Octofit Tracker API Root')
+    import os
+    codespace_name = os.environ.get('CODESPACE_NAME', 'localhost')
+    api_url = f'https://{codespace_name}-8000.app.github.dev/api/' if codespace_name != 'localhost' else 'http://localhost:8000/api/'
+    return HttpResponse(f'Octofit Tracker API Root: {api_url}')
 
 urlpatterns = [
     path('admin/', admin.site.urls),
